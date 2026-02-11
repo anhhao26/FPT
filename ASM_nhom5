@@ -1,4 +1,1 @@
 
-git rm ASM_nhom5
-git commit -m "Delete ASM_nhom5"
-git push
