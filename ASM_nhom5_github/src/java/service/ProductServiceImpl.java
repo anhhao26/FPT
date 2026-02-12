@@ -38,15 +38,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void createNewProduct(Product product) {
-        // Có thể thêm logic kiểm tra dữ liệu ở đây trước khi gọi DAO
-        // Ví dụ: if (product.getSellingPrice() < 0) throw Exception...
-        productDAO.createNewProduct(product);
+    public void createNewProduct(Product p) {
+    // LOGIC NGHIỆP VỤ: Nếu là hàng tiêu dùng (isTradeGood = false) -> Giá bán phải bằng 0
+        if (!p.isIsTradeGood()) {
+           p.setSellingPrice(0);
+    }   
+        productDAO.createNewProduct(p);
     }
 
     @Override
-    public void updateProductInfo(Product product) {
-        productDAO.updateProductInfo(product);
+    public void updateProductInfo(Product p) {
+    // LOGIC NGHIỆP VỤ TƯƠNG TỰ
+        if (!p.isIsTradeGood()) {
+            p.setSellingPrice(0);
+    }   
+        productDAO.updateProductInfo(p);
     }
 
     @Override

@@ -5,7 +5,7 @@ import dao.SupplierDAO;
 import entity.Product;
 import entity.Supplier;
 import service.ProductService;      
-import service.ProductServiceImpl; 
+import service.ProductServiceImpl;
 import service.SupplierService;
 import service.SupplierServiceImpl;
 import java.io.IOException;
@@ -100,11 +100,12 @@ public class ProductController extends HttpServlet {
                 // Khi tạo mới, lấy số lượng và giá vốn ban đầu để ghi lịch sử lần đầu
                 p.setQuantity(Integer.parseInt(request.getParameter("quantity")));
                 p.setCostPrice(Double.parseDouble(request.getParameter("costPrice")));
-                p.setSellingPrice(Double.parseDouble(request.getParameter("sellingPrice")));
-                
+                p.setSellingPrice(Double.parseDouble(request.getParameter("sellingPrice")));                
                 Supplier s = new Supplier();
                 s.setSupplierID(Integer.parseInt(request.getParameter("supplierID")));
                 p.setSupplier(s);
+                boolean isTrade = "1".equals(request.getParameter("isTradeGood"));
+                p.setIsTradeGood(isTrade);
                 
                 // Gọi hàm Create riêng
                 productService.createNewProduct(p); 
@@ -123,6 +124,8 @@ public class ProductController extends HttpServlet {
                 Supplier s = new Supplier();
                 s.setSupplierID(Integer.parseInt(request.getParameter("supplierID")));
                 p.setSupplier(s);
+                boolean isTrade = "1".equals(request.getParameter("isTradeGood"));
+                p.setIsTradeGood(isTrade);
                 
                 // Gọi hàm Update Info riêng
                 productService.updateProductInfo(p);

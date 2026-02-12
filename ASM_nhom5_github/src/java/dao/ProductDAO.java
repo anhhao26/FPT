@@ -59,6 +59,7 @@ public void updateProductInfo(Product p) {
             existing.setUnit(p.getUnit());
             existing.setSellingPrice(p.getSellingPrice());
             existing.setSupplier(p.getSupplier());
+            existing.setIsTradeGood(p.isIsTradeGood());
             
             // Lưu ý: Không cho sửa Quantity và CostPrice ở đây để tránh gian lận/nhầm lẫn
             // Hoặc nếu bạn muốn cho sửa sai số thì set ở đây nhưng không ghi history
