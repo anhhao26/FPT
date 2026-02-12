@@ -94,7 +94,7 @@
 
                                         <a href="products?action=hardDelete&id=${p.productID}"
                                             class="btn btn-sm btn-danger"
-                                            onclick="return confirm('NGUY HIỂM: Hành động này sẽ xóa VĨNH VIỄN dữ liệu!\nBạn có chắc chắn muốn tiếp tục không?');">
+                                            onclick="return confirm('NGUY HIỂM: Hành động này sẽ xóa VĨNH VIỄN dữ liệu! Tương đương với việc mọi lịch sử mua hàng và nhập hàng sẽ biến mất\nBạn có chắc chắn muốn tiếp tục không?');">
                                             Xóa
                                         </a>
                                     </td>
