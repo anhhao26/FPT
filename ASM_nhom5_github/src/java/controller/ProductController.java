@@ -5,7 +5,9 @@ import dao.SupplierDAO;
 import entity.Product;
 import entity.Supplier;
 import service.ProductService;      
-import service.ProductServiceImpl;  
+import service.ProductServiceImpl; 
+import service.SupplierService;
+import service.SupplierServiceImpl;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -18,12 +20,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ProductController extends HttpServlet {
 
     private ProductService productService; 
-    private SupplierDAO supplierDAO; 
+    private SupplierService supplierService; 
 
     @Override
     public void init() {
         productService = new ProductServiceImpl();
-        supplierDAO = new SupplierDAO();
+        supplierService = new SupplierServiceImpl();
     }
 
     // --- PHẦN 1: ĐIỀU HƯỚNG (GET) ---
@@ -159,7 +161,7 @@ public class ProductController extends HttpServlet {
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Supplier> listSuppliers = supplierDAO.findAll();
+        List<Supplier> listSuppliers = supplierService.findAll();
         request.setAttribute("listSuppliers", listSuppliers);
         request.getRequestDispatcher("Product/product-form.jsp").forward(request, response);
     }
@@ -168,7 +170,7 @@ public class ProductController extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Product existingProduct = productService.findById(id);
-        List<Supplier> listSuppliers = supplierDAO.findAll();
+        List<Supplier> listSuppliers = supplierService.findAll();
         
         request.setAttribute("product", existingProduct);
         request.setAttribute("listSuppliers", listSuppliers);
@@ -188,7 +190,7 @@ public class ProductController extends HttpServlet {
     
     private void listSuppliers(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Supplier> list = supplierDAO.findAll();
+        List<Supplier> list = supplierService.findAll();
         request.setAttribute("listSuppliers", list);
         request.getRequestDispatcher("Product/supplier-list.jsp").forward(request, response);
     }
@@ -201,7 +203,7 @@ public class ProductController extends HttpServlet {
     private void showEditSupplierForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Supplier s = supplierDAO.findById(id);
+        Supplier s = supplierService.findById(id);
         request.setAttribute("supplier", s);
         request.getRequestDispatcher("Product/supplier-form.jsp").forward(request, response);
     }
@@ -221,7 +223,7 @@ public class ProductController extends HttpServlet {
         s.setContactPhone(phone);
         s.setAddress(address);
 
-        supplierDAO.save(s);
+        supplierService.save(s);
         response.sendRedirect("products?action=listSuppliers");
     }
 
@@ -229,7 +231,7 @@ public class ProductController extends HttpServlet {
             throws IOException {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-            supplierDAO.delete(id);
+            supplierService.delete(id);
             response.sendRedirect("products?action=listSuppliers");
         } catch (Exception e) {
             response.sendRedirect("products?action=listSuppliers&error=CannotDelete");
