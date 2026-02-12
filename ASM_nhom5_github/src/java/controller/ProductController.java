@@ -59,6 +59,11 @@ public class ProductController extends HttpServlet {
                     productService.hardDelete(idHard);
                     response.sendRedirect("products");
                     break;
+                case "restore":
+                    int idRestore = Integer.parseInt(request.getParameter("id"));
+                    productService.restore(idRestore);
+                    response.sendRedirect("products");
+                    break;
 
                 // 2. Quản lý Nhà cung cấp
                 case "listSuppliers":
@@ -156,10 +161,27 @@ public class ProductController extends HttpServlet {
     // --- CÁC HÀM HIỂN THỊ VIEW (JSP) ---
 
     private void listProducts(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        List<Product> listProducts = productService.findAll();
-        request.setAttribute("listProducts", listProducts);
-        request.getRequestDispatcher("Product/product-list.jsp").forward(request, response);
+        throws ServletException, IOException {
+    
+    // 1. Lấy tham số từ URL (VD: products?showHidden=true)
+    String showHidden = request.getParameter("showHidden");
+    
+    List<Product> listProducts;
+
+    // 2. Logic lọc dữ liệu
+    if ("true".equals(showHidden)) {
+        // Nếu chọn "Hiện hàng ẩn" -> Gọi hàm lấy tất cả
+        listProducts = productService.findAll();
+    } else {
+        // Mặc định -> Chỉ gọi hàm lấy hàng đang Active
+        listProducts = productService.findActiveOnly();
+    }
+
+    // 3. Gửi dữ liệu và trạng thái của nút checkbox về JSP
+    request.setAttribute("listProducts", listProducts);
+    request.setAttribute("isShowHidden", "true".equals(showHidden)); // Để JSP biết mà tick vào checkbox
+    
+    request.getRequestDispatcher("Product/product-list.jsp").forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)

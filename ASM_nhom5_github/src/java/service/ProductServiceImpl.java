@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Module 2: Implementation của Service
- *  Controller gọi vào đây -> Class này gọi DAO.
+ *  
  */
 public class ProductServiceImpl implements ProductService {
 
@@ -30,6 +30,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findAll() {
         return productDAO.findAll();
+    }
+    
+    @Override
+    public List<Product> findActiveOnly() {
+        return productDAO.findActiveOnly();
     }
 
     @Override
@@ -68,5 +73,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void hardDelete(int id) {
         productDAO.hardDelete(id); // Gọi hàm delete trong DAO
+    }
+
+    @Override
+    public void restore(int id) {
+        productDAO.restore(id);
     }
 }

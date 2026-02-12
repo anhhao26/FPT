@@ -17,14 +17,26 @@
                 </nav>
 
                 <div class="container-fluid">
-                    <div class="d-flex justify-content-between mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
                         <h3>Danh sách Vật tư & Hàng hóa</h3>
-                        <div>
+
+                        <div class="d-flex align-items-center">
+                            <form action="products" method="get" class="mr-3">
+                                <input type="hidden" name="action" value="list">
+
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switchHidden"
+                                        name="showHidden" value="true" ${isShowHidden ? 'checked' : '' }
+                                        onchange="this.form.submit()">
+                                    <label class="custom-control-label font-weight-bold" for="switchHidden">
+                                        Hiện cả hàng đã ẩn
+                                    </label>
+                                </div>
+                            </form>
+
                             <a href="products?action=listSuppliers" class="btn btn-outline-primary mr-2">Quản lý Nhà
                                 Cung Cấp</a>
-
-                            <a href="products?action=new" class="btn btn-success font-weight-bold">+ Nhập loại hàng
-                                mới</a>
+                            <a href="products?action=new" class="btn btn-success font-weight-bold">+ Nhập hàng mới</a>
                         </div>
                     </div>
 
@@ -79,24 +91,29 @@
 
                                     <td>
                                         <c:if test="${p.isActive}">
-                                            <a href="products?action=edit&id=${p.productID}" class="btn btn-sm btn-info"
-                                                title="Sửa tên/giá bán">Sửa</a>
+                                            <a href="products?action=edit&id=${p.productID}"
+                                                class="btn btn-sm btn-info">Sửa</a>
 
                                             <a href="products?action=import&id=${p.productID}"
-                                                class="btn btn-sm btn-success" title="Nhập thêm hàng">Nhập</a>
+                                                class="btn btn-sm btn-success">Nhập</a>
 
                                             <a href="products?action=softDelete&id=${p.productID}"
                                                 class="btn btn-sm btn-warning"
-                                                onclick="return confirm('CẢNH BÁO: Bạn muốn NGỪNG KINH DOANH sản phẩm này?\nNó sẽ bị ẩn khỏi danh sách bán hàng.');">
+                                                onclick="return confirm('Tạm ngừng kinh doanh sản phẩm này?');">
                                                 Ẩn
                                             </a>
                                         </c:if>
 
-                                        <a href="products?action=hardDelete&id=${p.productID}"
-                                            class="btn btn-sm btn-danger"
-                                            onclick="return confirm('NGUY HIỂM: Hành động này sẽ xóa VĨNH VIỄN dữ liệu! Tương đương với việc mọi lịch sử mua hàng và nhập hàng sẽ biến mất\nBạn có chắc chắn muốn tiếp tục không?');">
-                                            Xóa
-                                        </a>
+                                        <c:if test="${!p.isActive}">
+                                            <a href="products?action=restore&id=${p.productID}"
+                                                class="btn btn-sm btn-secondary">Mở lại</a>
+
+                                            <a href="products?action=hardDelete&id=${p.productID}"
+                                                class="btn btn-sm btn-danger"
+                                                onclick="return confirm('CẢNH BÁO: Chỉ xóa được nếu chưa có lịch sử giao dịch!\nBạn có chắc chắn không?');">
+                                                Xóa VV
+                                            </a>
+                                        </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>

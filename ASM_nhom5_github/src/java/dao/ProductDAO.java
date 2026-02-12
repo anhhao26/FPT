@@ -33,6 +33,18 @@ public class ProductDAO {
         em.close();
     }
 }
+    //  Hàm chỉ lấy hàng đang kinh doanh (Active = true)
+    public List<Product> findActiveOnly() {
+    EntityManager em = JpaUtils.getEntityManager();
+    try {
+        TypedQuery<Product> query = em.createQuery(
+            "SELECT p FROM Product p WHERE p.isActive = true ORDER BY p.productID ASC", 
+            Product.class);
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
+}
 
     // Tìm sản phẩm theo ID (Dùng khi chọn sửa sản phẩm)
     public Product findById(int id) {
@@ -198,20 +210,40 @@ public void createNewProduct(Product p) {
     }
     }
     public void softDelete(int id) {
-    EntityManager em = JpaUtils.getEntityManager();
-    EntityTransaction trans = em.getTransaction();
-    try {
-        trans.begin();
-        Product p = em.find(Product.class, id);
-        if (p != null) {
-            p.setIsActive(false); // Đánh dấu là ẩn
-            em.merge(p);
+        EntityManager em = JpaUtils.getEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        try {
+            trans.begin();
+            Product p = em.find(Product.class, id);
+            if (p != null) {
+                p.setIsActive(false); // Đánh dấu là ẩn
+                em.merge(p);
+            }
+            trans.commit();
+        } catch (Exception e) {
+            trans.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
         }
-        trans.commit();
-    } catch (Exception e) {
-        trans.rollback();
-    } finally {
-        em.close();
     }
-}
+
+    public void restore(int id) {
+        EntityManager em = JpaUtils.getEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        try {
+            trans.begin();
+            Product p = em.find(Product.class, id);
+            if (p != null) {
+                p.setIsActive(true); // Đánh dấu là hiện (Kinh doanh lại)
+                em.merge(p);
+            }
+            trans.commit();
+        } catch (Exception e) {
+            trans.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
 }

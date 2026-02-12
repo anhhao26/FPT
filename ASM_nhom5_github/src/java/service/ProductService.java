@@ -19,8 +19,11 @@ import java.util.List;
  */
 public interface ProductService {
     
-    // Lấy danh sách sản phẩm
+    // Lấy danh sách sản phẩm 
     List<Product> findAll();
+    
+    // Lấy danh sách sản phẩm đang active
+    List<Product> findActiveOnly();
     
     // Tìm sản phẩm theo ID
     Product findById(int id);
@@ -39,4 +42,7 @@ public interface ProductService {
     
     // [Module 2] Xóa vĩnh viễn
     void hardDelete(int id);
+
+    // [Module 2] Khôi phục (Mở lại kinh doanh)
+    void restore(int id);
 }
