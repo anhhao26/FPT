@@ -5,6 +5,9 @@
     <class>entity.ImportHistory</class>
     <class>entity.Product</class>
     <class>entity.Supplier</class>
+    <class>entity.Room</class>
+    <class>entity.Booking</class>
+    <class>entity.Voucher</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>
     <properties>

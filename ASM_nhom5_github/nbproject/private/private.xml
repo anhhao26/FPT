@@ -3,7 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/Huynh%20Huy/Documents/NetBeansProjects/makhuyenmai/FPT/ASM_nhom5_github/src/java/controller/ProductController.java</file>
             <file>file:/C:/Users/Huynh%20Huy/Documents/NetBeansProjects/makhuyenmai/FPT/ASM_nhom5_github/src/java/utils/JpaUtils.java</file>
             <file>file:/C:/Users/Huynh%20Huy/Documents/NetBeansProjects/makhuyenmai/FPT/ASM_nhom5_github/src/java/entity/Room.java</file>
@@ -18,9 +17,6 @@
             <file>file:/C:/Users/Huynh%20Huy/Documents/NetBeansProjects/makhuyenmai/FPT/ASM_nhom5_github/src/java/service/VoucherServiceImpl.java</file>
             <file>file:/C:/Users/Huynh%20Huy/Documents/NetBeansProjects/makhuyenmai/FPT/ASM_nhom5_github/src/java/controller/BookingController.java</file>
             <file>file:/C:/Users/Huynh%20Huy/Documents/NetBeansProjects/makhuyenmai/FPT/ASM_nhom5_github/src/conf/persistence.xml</file>
-=======
-            <file>file:/C:/Code/github/FPT/ASM_nhom5_github/web/Product/product-list.jsp</file>
->>>>>>> b69ce481c0bbe5f92fae64a98eb8d32b6c60f366
         </group>
     </open-files>
 </project-private>
