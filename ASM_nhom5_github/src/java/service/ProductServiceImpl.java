@@ -79,4 +79,15 @@ public class ProductServiceImpl implements ProductService {
     public void restore(int id) {
         productDAO.restore(id);
     }
+    
+    @Override
+    public boolean deductStock(int productId, int quantityToDeduct) {
+        // Có thể thêm logic kiểm tra điều kiện ở đây trước khi gọi DAO nếu cần
+        if (quantityToDeduct <= 0) {
+            return false; // Không hợp lệ
+        }
+        
+        // Gọi xuống DAO để thực hiện trừ kho trong Database
+        return productDAO.deductStock(productId, quantityToDeduct);
+    }
 }

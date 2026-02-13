@@ -45,4 +45,6 @@ public interface ProductService {
 
     // [Module 2] Khôi phục (Mở lại kinh doanh)
     void restore(int id);
+    
+    boolean deductStock(int productId, int quantityToDeduct);
 }
