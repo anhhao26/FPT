@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Module 2: Implementation của Service
- *  Controller gọi vào đây -> Class này gọi DAO.
+ *  
  */
 public class ProductServiceImpl implements ProductService {
 
@@ -31,6 +31,11 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAll() {
         return productDAO.findAll();
     }
+    
+    @Override
+    public List<Product> findActiveOnly() {
+        return productDAO.findActiveOnly();
+    }
 
     @Override
     public Product findById(int id) {
@@ -38,15 +43,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void createNewProduct(Product product) {
-        // Có thể thêm logic kiểm tra dữ liệu ở đây trước khi gọi DAO
-        // Ví dụ: if (product.getSellingPrice() < 0) throw Exception...
-        productDAO.createNewProduct(product);
+    public void createNewProduct(Product p) {
+    // LOGIC NGHIỆP VỤ: Nếu là hàng tiêu dùng (isTradeGood = false) -> Giá bán phải bằng 0
+        if (!p.isIsTradeGood()) {
+           p.setSellingPrice(0);
+    }   
+        productDAO.createNewProduct(p);
     }
 
     @Override
-    public void updateProductInfo(Product product) {
-        productDAO.updateProductInfo(product);
+    public void updateProductInfo(Product p) {
+    // LOGIC NGHIỆP VỤ TƯƠNG TỰ
+        if (!p.isIsTradeGood()) {
+            p.setSellingPrice(0);
+    }   
+        productDAO.updateProductInfo(p);
     }
 
     @Override
@@ -62,5 +73,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void hardDelete(int id) {
         productDAO.hardDelete(id); // Gọi hàm delete trong DAO
+    }
+
+    @Override
+    public void restore(int id) {
+        productDAO.restore(id);
+    }
+    
+    @Override
+    public boolean deductStock(int productId, int quantityToDeduct) {
+        // Có thể thêm logic kiểm tra điều kiện ở đây trước khi gọi DAO nếu cần
+        if (quantityToDeduct <= 0) {
+            return false; // Không hợp lệ
+        }
+        
+        // Gọi xuống DAO để thực hiện trừ kho trong Database
+        return productDAO.deductStock(productId, quantityToDeduct);
     }
 }
